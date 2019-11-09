@@ -1,8 +1,6 @@
 package array;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Solution {
     /**
@@ -169,4 +167,110 @@ public class Solution {
         }
         return res;
     }
+
+    /**
+     * 移动零
+     * 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。
+     *
+     * @param nums
+     */
+    public void moveZeroes(int[] nums) {
+        int i = 0, j = nums.length;
+        while (i < j) {
+            if (nums[i] == 0) {
+                int tmp = nums[i];
+                for (int k = i; k < j - 1; k++) {
+                    nums[k] = nums[k + 1];
+                }
+                nums[--j] = tmp;
+            } else {
+                i++;
+            }
+        }
+    }
+
+    /**
+     * 两数之和
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                return new int[]{map.get(target - nums[i]), i};
+            }
+            map.put(nums[i], i);
+        }
+        return null;
+    }
+
+    /**
+     * 有效的数独
+     * 判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可。
+     * 数字 1-9 在每一行只能出现一次。
+     * 数字 1-9 在每一列只能出现一次。
+     * 数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。
+     *
+     * @param board
+     * @return
+     */
+    public boolean isValidSudoku(char[][] board) {
+        Map<Integer, Integer>[] rows = new HashMap[9];
+        Map<Integer, Integer>[] columns = new HashMap[9];
+        Map<Integer, Integer>[] boxes = new HashMap[9];
+        for (int i = 0; i < 9; i++) {
+            rows[i] = new HashMap<>();
+            columns[i] = new HashMap<>();
+            boxes[i] = new HashMap<>();
+        }
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] != '.') {
+                    int n = (int) board[i][j];
+                    int boxIndex = (i / 3) * 3 + j / 3;
+
+                    rows[i].put(n, rows[i].getOrDefault(n, 0) + 1);
+                    columns[j].put(n, columns[j].getOrDefault(n, 0) + 1);
+                    boxes[boxIndex].put(n, boxes[boxIndex].getOrDefault(n, 0) + 1);
+
+                    if (rows[i].get(n) > 1 || columns[j].get(n) > 1 || boxes[boxIndex].get(n) > 1) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 旋转图像
+     * 给定一个 n × n 的二维矩阵表示一个图像。
+     * 将图像顺时针旋转 90 度。
+     *
+     * @param matrix
+     */
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        // 转置
+        for (int i = 0; i < n; i++) {
+            for (int j = i; j < n; j++) {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = tmp;
+            }
+        }
+
+        // 行内左右替换
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n / 2; j++) {
+                int tmp = matrix[i][j];
+                matrix[i][j] = matrix[i][n - j - 1];
+                matrix[i][n - j - 1] = tmp;
+            }
+        }
+    }
+
 }
