@@ -155,9 +155,31 @@ public class Solution {
         return -1;
     }
 
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        System.out.println(solution.strStr("mississippi", "mississippi"));
+    /**
+     * 最长公共前缀
+     *
+     * @param strs
+     * @return
+     */
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) {
+            return "";
+        }
+        if (strs.length == 1) {
+            return strs[0];
+        }
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < strs[0].length(); i++) {
+            char c = strs[0].charAt(i);
+            for (int j = 1; j < strs.length; j++) {
+                if (strs[j].length() == i || strs[j].charAt(i) != c) {
+                    return result.toString();
+                } else if (j == strs.length - 1) {
+                    result.append(c);
+                }
+            }
+        }
+        return result.toString();
     }
 
 }
