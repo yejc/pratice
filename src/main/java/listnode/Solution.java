@@ -1,5 +1,8 @@
 package listnode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Solution {
     /**
      * 删除链表中的节点
@@ -103,16 +106,47 @@ public class Solution {
         return dummy.next;
     }
 
-    public static void main(String[] args) {
-        ListNode n1 = new ListNode(1);
-        ListNode n2 = new ListNode(2);
-        ListNode n3 = new ListNode(3);
+    /**
+     * 回文链表
+     *
+     * @param head
+     * @return
+     */
+    public boolean isPalindrome(ListNode head) {
+        List<Integer> list = new ArrayList<>();
+        while (head != null) {
+            list.add(head.val);
+            head = head.next;
+        }
+        int length = list.size();
+        for (int i = 0; i < length / 2; i++) {
+            if (!list.get(i).equals(list.get(length - 1 - i))) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-        n1.next = n2;
-        n2.next = n3;
+    /**
+     * 环形链表
+     *
+     * @param head
+     * @return
+     */
+    public boolean hasCycle(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
 
-        Solution solution = new Solution();
-        System.out.println(solution.reverseList2(n1).val);
+        ListNode p1 = dummy;
+        ListNode p2 = dummy;
+        while (p2 != null && p2.next != null) {
+            p1 = p1.next;
+            p2 = p2.next.next;
+            if (p1 == p2) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
