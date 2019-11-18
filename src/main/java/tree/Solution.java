@@ -1,5 +1,9 @@
 package tree;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Solution {
     /**
      * 二叉树的最大深度
@@ -22,5 +26,87 @@ public class Solution {
         maxDepth = Math.max(maxDepth, depth);
         maxDepthHelper(node.left, depth);
         maxDepthHelper(node.right, depth);
+    }
+
+    /**
+     * 验证二叉搜索树
+     *
+     * @param root
+     * @return
+     */
+    public boolean isValidBST(TreeNode root) {
+        return isValidBSTHelper(root, null, null);
+    }
+
+    private boolean isValidBSTHelper(TreeNode node, Integer lower, Integer upper) {
+        if (node == null) {
+            return true;
+        }
+        int val = node.val;
+        if (lower != null && val <= lower) {
+            return false;
+        }
+        if (upper != null && val >= upper) {
+            return false;
+        }
+        if (!isValidBSTHelper(node.left, lower, val)) {
+            return false;
+        }
+        if (!isValidBSTHelper(node.right, val, upper)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 对称二叉树
+     *
+     * @param root
+     * @return
+     */
+    public boolean isSymmetric(TreeNode root) {
+        return isMirror(root, root);
+    }
+
+    private boolean isMirror(TreeNode t1, TreeNode t2) {
+        if (t1 == null && t2 == null) {
+            return true;
+        }
+        if (t1 == null || t2 == null) {
+            return false;
+        }
+        return t1.val == t2.val && isMirror(t1.left, t2.right) && isMirror(t1.right, t2.left);
+    }
+
+    /**
+     * 二叉树的层次遍历
+     *
+     * @param root
+     * @return
+     */
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            List<Integer> levelList = new ArrayList<>();
+            int levelLength = queue.size();
+            for (int i = 0; i < levelLength; i++) {
+                TreeNode node = queue.poll();
+                levelList.add(node.val);
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            result.add(levelList);
+        }
+        return result;
     }
 }
