@@ -109,4 +109,30 @@ public class Solution {
         }
         return result;
     }
+
+    /**
+     * 将有序数组转换为二叉搜索树
+     * 将一个按照升序排列的有序数组，转换为一棵高度平衡二叉搜索树。
+     *
+     * @param nums
+     * @return
+     */
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return sortedArrayToBSTHelper(nums, 0, nums.length - 1);
+    }
+
+    private TreeNode sortedArrayToBSTHelper(int[] nums, int lo, int hi) {
+        if (lo > hi) {
+            return null;
+        }
+        if (lo == hi) {
+            return new TreeNode(nums[lo]);
+        }
+        int mid = lo + (hi - lo) / 2;
+        TreeNode node = new TreeNode(nums[mid]);
+        node.left = sortedArrayToBSTHelper(nums, lo, mid - 1);
+        node.right = sortedArrayToBSTHelper(nums, mid + 1, hi);
+
+        return node;
+    }
 }
