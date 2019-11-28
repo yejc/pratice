@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 骑士周游（回溯算法）
+ * 骑士周游（回溯算法优化为贪心算法）
  * 一个X*Y的棋盘，棋子只能走“日”字，如何走才能经过棋盘的每一个位置
  *
  * @program: pratice
@@ -31,8 +31,9 @@ public class HorseChessBoard {
     private boolean finished;
 
     public static void main(String[] args) {
-        HorseChessBoard horseChessBoard = new HorseChessBoard(6, 6);
-        int[][] chessboard = new int[6][6];
+        int row = 8;
+        int column = 8;
+        HorseChessBoard horseChessBoard = new HorseChessBoard(row, column);
         horseChessBoard.travel(0, 0, 1);
         horseChessBoard.print();
     }
@@ -55,6 +56,10 @@ public class HorseChessBoard {
         chessboard[row][column] = step;
         visited[row * X + column] = true;
         List<Point> next = next(new Point(row, column));
+        // 贪心算法优化，按非递减排序，使得回溯次数减少
+        next.sort((o1, o2) -> {
+            return next(o1).size() - next(o2).size();
+        });
         for (Point point : next) {
             if (!visited[point.x * X + point.y]) {
                 travel(point.x, point.y, step + 1);
