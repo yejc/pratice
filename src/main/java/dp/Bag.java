@@ -15,7 +15,7 @@ public class Bag {
         // 背包大小
         int m = 5;
 
-        // 状态方程
+        // 状态方程，v[i][j]表示第i+1个物品在背包最大承重为j的情况下，可选择的最大价值
         int[][] v = new int[w.length + 1][];
         // 存放背包轨迹
         int[][] trace = new int[w.length + 1][];
@@ -28,11 +28,15 @@ public class Bag {
         for (int i = 1; i < v.length; i++) {
             for (int j = 1; j < v[i].length; j++) {
                 if (w[i - 1] > j) {
+                    // 当前物品重量大于背包最大承重
                     v[i][j] = v[i - 1][j];
                 } else {
+                    // 当前物品重量小于背包最大承重
                     if (v[i - 1][j] > value[i - 1] + v[i - 1][j - w[i - 1]]) {
+                        // 如果不放当前物品比放当前物品价值高，则v[i][j] = v[i -1][j]，意思是不放入当前物品，上一次怎么放，这一次就怎么放
                         v[i][j] = v[i - 1][j];
                     } else {
+                        // 如果放入当前物品比不放当前物品价值高，则放入当前物品
                         v[i][j] = value[i - 1] + v[i - 1][j - w[i - 1]];
                         trace[i][j] = 1;
                     }

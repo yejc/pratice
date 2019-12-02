@@ -56,7 +56,7 @@ public class HorseChessBoard {
         chessboard[row][column] = step;
         visited[row * X + column] = true;
         List<Point> next = next(new Point(row, column));
-        // 贪心算法优化，按非递减排序，使得回溯次数减少
+        // 贪心算法优化，按下一步的下一步选择个数非递减排序，使得回溯次数减少
         next.sort((o1, o2) -> {
             return next(o1).size() - next(o2).size();
         });
