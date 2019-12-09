@@ -4,9 +4,9 @@ package sort;
  * @program: pratice
  * @description:
  * @author: yejc
- * @create: 2019-11-20 20:18
+ * @create: 2019-12-09 21:10
  **/
-public class Solution {
+public class Solution2 {
 
     /**
      * 合并两个有序数组
@@ -33,7 +33,8 @@ public class Solution {
      * @return
      */
     public int firstBadVersion(int n) {
-        int lo = 1, hi = n;
+        int lo = 1;
+        int hi = n;
         while (lo < hi) {
             int mid = lo + (hi - lo) / 2;
             if (isBadVersion(mid)) {
@@ -46,6 +47,6 @@ public class Solution {
     }
 
     boolean isBadVersion(int version) {
-        return true;
+        return false;
     }
 }
