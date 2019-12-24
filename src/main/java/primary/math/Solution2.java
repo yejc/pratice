@@ -3,30 +3,33 @@ package primary.math;
 import java.util.*;
 
 /**
- * @program: pratice
- * @description:
- * @author: yejc
- * @create: 2019-12-07 11:09
- **/
-public class Solution {
+ * @author yejc
+ * @date 2019/12/23 21:31
+ */
+public class Solution2 {
+
     /**
      * Fizz Buzz
+     * 写一个程序，输出从 1 到 n 数字的字符串表示。
+     * <p>
+     * 1. 如果 n 是3的倍数，输出“Fizz”；
+     * <p>
+     * 2. 如果 n 是5的倍数，输出“Buzz”；
+     * <p>
+     * 3.如果 n 同时是3和5的倍数，输出 “FizzBuzz”。
      *
      * @param n
      * @return
      */
     public List<String> fizzBuzz(int n) {
-        if (n < 1) {
-            return null;
-        }
-        List<String> result = new ArrayList<>(n);
+        List<String> result = new ArrayList<>();
         for (int i = 1; i <= n; i++) {
-            if (i % 3 == 0 && i % 5 != 0) {
-                result.add("Fizz");
-            } else if (i % 3 != 0 && i % 5 == 0) {
-                result.add("Buzz");
-            } else if (i % 3 == 0 && i % 5 == 0) {
+            if (i % 3 == 0 && i % 5 == 0) {
                 result.add("FizzBuzz");
+            } else if (i % 3 == 0) {
+                result.add("Fizz");
+            } else if (i % 5 == 0) {
+                result.add("Buzz");
             } else {
                 result.add(Integer.toString(i));
             }
@@ -41,24 +44,24 @@ public class Solution {
      * @return
      */
     public int countPrimes(int n) {
-        boolean[] isPrimes = new boolean[n];
-        Arrays.fill(isPrimes, true);
+        boolean[] primes = new boolean[n];
+        Arrays.fill(primes, true);
         for (int i = 2; i * i < n; i++) {
             for (int j = i * i; j < n; j += i) {
-                if (isPrimes[i]) {
-                    isPrimes[j] = false;
+                if (primes[i]) {
+                    primes[j] = false;
                 }
             }
         }
+
         int count = 0;
         for (int i = 2; i < n; i++) {
-            if (isPrimes[i]) {
+            if (primes[i]) {
                 count++;
             }
         }
         return count;
     }
-
 
     /**
      * 3的幂
@@ -98,10 +101,10 @@ public class Solution {
         map.put("CD", 400);
         map.put("CM", 900);
 
-        int result = 0;
         int i = 0;
+        int result = 0;
         while (i < s.length()) {
-            if (i + 1 < s.length() && map.containsKey(s.substring(i, i + 2))) {
+            if (i < s.length() - 1 && map.containsKey(s.substring(i, i + 2))) {
                 result += map.get(s.substring(i, i + 2));
                 i += 2;
             } else {
