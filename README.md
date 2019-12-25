@@ -10,4 +10,4 @@
   堆顶元素并插入当前元素。遍历完成后，堆内元素即为topK元素。
 3. extra.producer_consumer:生产者消费者模型
     - 阻塞队列保证线程安全，消费者使用ForkJoinPool拆分任务（分治）
-4. primary.array:数组算法练习
+4. leetcode.primary.array:数组算法练习
