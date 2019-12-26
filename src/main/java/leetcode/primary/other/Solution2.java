@@ -1,8 +1,6 @@
 package leetcode.primary.other;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author yejc
@@ -86,5 +84,82 @@ public class Solution2 {
             res.add(list);
         }
         return res;
+    }
+
+    /**
+     * 矩阵置零
+     *
+     * @param matrix
+     */
+    public void setZeroes(int[][] matrix) {
+        List<Integer> rows = new ArrayList<>();
+        List<Integer> columns = new ArrayList<>();
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] == 0) {
+                    rows.add(i);
+                    columns.add(j);
+                }
+            }
+        }
+        for (Integer row : rows) {
+            for (int j = 0; j < matrix[row].length; j++) {
+                matrix[row][j] = 0;
+            }
+        }
+
+        for (Integer column : columns) {
+            for (int i = 0; i < matrix.length; i++) {
+                matrix[i][column] = 0;
+            }
+        }
+    }
+
+    /**
+     * 字谜分组
+     *
+     * @param strs
+     * @return
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        // 先按字符排序，再分组
+        if (strs.length == 0) {
+            return new ArrayList<>();
+        }
+        Map<String, List<String>> map = new HashMap<>();
+        for (String str : strs) {
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String value = String.valueOf(chars);
+//            String value = new String(chars);
+            if (!map.containsKey(value)) {
+                map.put(value, new ArrayList<>());
+            }
+            map.get(value).add(str);
+        }
+        return new ArrayList<>(map.values());
+    }
+
+    /**
+     * 无重复字符的最长子串
+     *
+     * @param s
+     * @return
+     */
+    public int lengthOfLongestSubstring(String s) {
+        if (s.length() == 0) {
+            return 0;
+        }
+        int max = 0;
+        int left = 0;
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (map.containsKey(s.charAt(i))) {
+                left = Integer.max(map.get(s.charAt(i)) + 1, left);
+            }
+            map.put(s.charAt(i), i);
+            max = Integer.max(max, i - left + 1);
+        }
+        return max;
     }
 }
