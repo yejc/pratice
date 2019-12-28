@@ -162,4 +162,62 @@ public class Solution2 {
         }
         return max;
     }
+
+    /**
+     * 最长回文子串(dp)
+     *
+     * @param s
+     * @return
+     */
+    public String longestPalindrome(String s) {
+        String result = "";
+        int maxLength = 0;
+        boolean[][] dp = new boolean[s.length()][s.length()];
+        for (int len = 1; len <= s.length(); len++) {
+            for (int start = 0; start < s.length(); start++) {
+                int end = start + len - 1;
+                if (end >= s.length()) { // 已越界
+                    break;
+                }
+                dp[start][end] = (len == 1 || len == 2 || dp[start + 1][end - 1]) && s.charAt(start) == s.charAt(end);
+                if (dp[start][end] && len > maxLength) {
+                    result = s.substring(start, end + 1);
+                    maxLength = len;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 最长回文子串(扩展中心)
+     *
+     * @param s
+     * @return
+     */
+    public String longestPalindrome2(String s) {
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+        int start = 0, end = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expandAroundCenter(s, i, i);
+            int len2 = expandAroundCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if (len > end - start + 1) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start, end + 1);
+    }
+
+    private int expandAroundCenter(String s, int i, int j) {
+        int L = i, R = j;
+        while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
+            L--;
+            R++;
+        }
+        return R - L - 1;
+    }
 }
