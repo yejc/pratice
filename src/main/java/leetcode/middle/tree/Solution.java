@@ -2,9 +2,7 @@ package leetcode.middle.tree;
 
 import leetcode.primary.tree.TreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author yejc
@@ -78,6 +76,69 @@ public class Solution {
             result.add(list);
         }
         return result;
+    }
+
+    /**
+     * 从前序与中序遍历序列构造二叉树
+     *
+     * @param preorder
+     * @param inorder
+     * @return
+     */
+    Map<Integer, Integer> map = new HashMap<>();
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        for (int i = 0; i < inorder.length; i++) {
+            map.put(inorder[i], i);
+        }
+        return buildTreeHelper(preorder, 0, preorder.length, inorder, 0, inorder.length);
+    }
+
+    private TreeNode buildTreeHelper(int[] preorder, int pStart, int pEnd, int[] inorder, int iStart, int iEnd) {
+        if (pStart == pEnd) {
+            return null;
+        }
+        TreeNode root = new TreeNode(preorder[pStart]);
+        // 找出root节点在inorder中的位置p，p左边为左子树，p右边为右子树
+        int p = map.get(preorder[pStart]);
+        // 左子树长度
+        int leftNum = p - iStart;
+        root.left = buildTreeHelper(preorder, pStart + 1, pStart + leftNum + 1, inorder, iStart, p);
+        root.right = buildTreeHelper(preorder, pStart + leftNum + 1, pEnd, inorder, p + 1, iEnd);
+
+        return root;
+    }
+
+    /**
+     * 从中序与后序遍历序列构造二叉树
+     *
+     * @param inorder
+     * @param postorder
+     * @return
+     */
+    Map<Integer, Integer> map2 = new HashMap<>();
+
+    public TreeNode buildTree2(int[] inorder, int[] postorder) {
+        for (int i = 0; i < inorder.length; i++) {
+            map2.put(inorder[i], i);
+        }
+        return buildTreeHelper2(inorder, 0, inorder.length, postorder, 0, postorder.length);
+    }
+
+    private TreeNode buildTreeHelper2(int[] inorder, int iStart, int iEnd, int[] postorder, int pStart, int pEnd) {
+        if (pStart == pEnd) {
+            return null;
+        }
+        TreeNode root = new TreeNode(postorder[pEnd - 1]);
+
+        int p = map2.get(postorder[pEnd - 1]);
+        // 左子树长度
+        int leftNum = p - iStart;
+
+        root.left = buildTreeHelper2(inorder, iStart, p, postorder, pStart, pStart + leftNum);
+        root.right = buildTreeHelper2(inorder, p + 1, iEnd, postorder, pStart + leftNum, pEnd - 1);
+
+        return root;
     }
 
 }
