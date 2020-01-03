@@ -141,4 +141,53 @@ public class Solution {
         return root;
     }
 
+    /**
+     * 填充每个节点的下一个右侧节点指针
+     *
+     * @param root
+     * @return
+     */
+    public Node connect(Node root) {
+        if (root == null) {
+            return null;
+        }
+        if (root.left != null) {
+            root.left.next = root.right;
+            if (root.next != null) {
+                root.right.next = root.next.left;
+            }
+        }
+        connect(root.left);
+        connect(root.right);
+
+        return root;
+    }
+
+    /**
+     * 二叉搜索树中第K小的元素
+     *
+     * @param root
+     * @param k
+     * @return
+     */
+    int k = 0;
+    int result = 0;
+
+    public int kthSmallest(TreeNode root, int k) {
+        this.k = k;
+        kthSmallestHelper(root);
+        return result;
+    }
+
+    private void kthSmallestHelper(TreeNode node) {
+        if (node == null) {
+            return;
+        }
+        kthSmallestHelper(node.left);
+        if (--k == 0) {
+            result = node.val;
+            return;
+        }
+        kthSmallestHelper(node.right);
+    }
 }
