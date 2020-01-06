@@ -101,4 +101,91 @@ public class Solution {
             tmp.remove(tmp.size() - 1);
         }
     }
+
+    /**
+     * 子集
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        subsetsHelper(nums, 0, result, new ArrayList<>());
+        return result;
+    }
+
+    private void subsetsHelper(int[] nums, int i, List<List<Integer>> result, ArrayList<Integer> tmp) {
+        result.add(new ArrayList<>(tmp));
+        for (int j = i; j < nums.length; j++) {
+            tmp.add(nums[j]);
+            subsetsHelper(nums, j + 1, result, tmp);
+            tmp.remove(tmp.size() - 1);
+        }
+    }
+
+    /**
+     * 单词搜索
+     *
+     * @param board
+     * @param word
+     * @return
+     */
+    public boolean exist(char[][] board, String word) {
+        boolean[][] visited = new boolean[board.length][board[0].length];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                if (existHelper(board, i, j, word, visited)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean existHelper(char[][] board, int i, int j, String word, boolean[][] visited) {
+        if (board[i][j] != word.charAt(0)) {
+            return false;
+        }
+        if (word.length() == 1) {
+            return true;
+        }
+        visited[i][j] = true;
+        boolean flag = false;
+        // 向右走
+        if (j < board[i].length - 1 && !visited[i][j + 1]) {
+            flag = existHelper(board, i, j + 1, word.substring(1, word.length()), visited);
+            if (flag) {
+                visited[i][j] = false;
+                return true;
+            }
+        }
+        // 向下走
+        if (i < board.length - 1 && !visited[i + 1][j]) {
+            flag = existHelper(board, i + 1, j, word.substring(1, word.length()), visited);
+            if (flag) {
+                visited[i][j] = false;
+                return true;
+            }
+        }
+        // 向左走
+        if (j > 0 && !visited[i][j - 1]) {
+            flag = existHelper(board, i, j - 1, word.substring(1, word.length()), visited);
+            if (flag) {
+                visited[i][j] = false;
+                return true;
+            }
+        }
+
+        // 向上走
+        if (i > 0 && !visited[i - 1][j]) {
+            flag = existHelper(board, i - 1, j, word.substring(1, word.length()), visited);
+            if (flag) {
+                visited[i][j] = false;
+                return true;
+            }
+        }
+
+        visited[i][j] = false;
+        return false;
+    }
 }
