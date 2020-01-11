@@ -137,4 +137,58 @@ public class Solution {
         return left;
     }
 
+    /**
+     * 在排序数组中查找元素的第一个和最后一个位置
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] searchRange(int[] nums, int target) {
+        int left = left_bound(nums, target);
+        int right = right_bound(nums, target);
+        return new int[]{left, right};
+    }
+
+    int left_bound(int[] nums, int target) {
+        if (nums.length == 0) {
+            return -1;
+        }
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                right = mid - 1;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            }
+        }
+        if (left >= nums.length) {
+            return -1;
+        }
+        return nums[left] == target ? left : -1;
+    }
+
+    int right_bound(int[] nums, int target) {
+        if (nums.length == 0) {
+            return -1;
+        }
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                left = mid + 1;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            }
+        }
+        if (left == 0) {
+            return -1;
+        }
+        return nums[left - 1] == target ? left - 1 : -1;
+    }
 }
