@@ -95,4 +95,46 @@ public class Solution2 {
         return new ArrayList<>(map.values());
     }
 
+    /**
+     * 无重复字符的最长子串
+     *
+     * @param s
+     * @return
+     */
+    public int lengthOfLongestSubstring(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        int max = 0;
+        int left = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (map.containsKey(s.charAt(i))) {
+                left = Integer.max(left, map.get(s.charAt(i)) + 1);
+            }
+            map.put(s.charAt(i), i);
+            max = Integer.max(max, i - left + 1);
+        }
+        return max;
+    }
+
+    /**
+     * 最长回文子串
+     *
+     * @param s
+     * @return
+     */
+    public String longestPalindrome(String s) {
+        int n = s.length();
+        String result = "";
+        boolean[][] dp = new boolean[n][n];
+        for (int i = n - 1; i >= 0; i--) {
+//        for (int i = 0; i < n; i--) {
+            for (int j = i; j < n; j++) {
+                dp[i][j] = s.charAt(i) == s.charAt(j) && (j - i < 2 || dp[i + 1][j - 1]);
+                if (dp[i][j] && j - i + 1 > result.length()) {
+                    result = s.substring(i, j + 1);
+                }
+            }
+        }
+        return result;
+    }
+
 }
