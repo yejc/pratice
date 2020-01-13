@@ -137,4 +137,32 @@ public class Solution2 {
         return result;
     }
 
+    /**
+     * 递增的三元子序列
+     *
+     * @param nums
+     * @return
+     */
+    public boolean increasingTriplet(int[] nums) {
+        for (int i = 1; i < nums.length; i++) {
+            boolean left = false;
+            boolean right = false;
+            for (int j = i - 1; j >= 0; j--) {
+                if (nums[j] < nums[i]) {
+                    left = true;
+                    break;
+                }
+            }
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[j] > nums[i]) {
+                    right = true;
+                    break;
+                }
+            }
+            if (left && right) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
