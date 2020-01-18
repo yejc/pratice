@@ -63,6 +63,7 @@ public class Solution {
     private void generateParenthesisHelper(String letter, int open, int close, List<String> result, int max) {
         if (letter.length() == max * 2) {
             result.add(letter);
+            return;
         }
         if (open < max) {
             generateParenthesisHelper(letter + "(", open + 1, close, result, max);

@@ -44,4 +44,60 @@ public class Solution2 {
             letterCombinationsHelper(digits, i + 1, str + s, result, map);
         }
     }
+
+    /**
+     * 生成括号
+     *
+     * @param n
+     * @return
+     */
+    public List<String> generateParenthesis(int n) {
+        List<String> result = new ArrayList<>();
+        generateParenthesisHelper(n, 0, "", result);
+        return result;
+    }
+
+    private void generateParenthesisHelper(int n, int k, String str, List<String> result) {
+        if (n < 0) {
+            return;
+        }
+        if (n == 0 && k == 0) {
+            result.add(str);
+            return;
+        }
+        generateParenthesisHelper(n - 1, k + 1, str + "(", result);
+        if (k > 0) {
+            generateParenthesisHelper(n, k - 1, str + ")", result);
+        }
+    }
+
+    /**
+     * 全排列
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        boolean[] visited = new boolean[nums.length];
+        permuteHelper(nums, 0, new ArrayList<>(), result, visited);
+        return result;
+    }
+
+    private void permuteHelper(int[] nums, int index, List<Integer> tmp, List<List<Integer>> result, boolean[] visited) {
+        if (tmp.size() == nums.length) {
+            result.add(new ArrayList<>(tmp));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (visited[i]) {
+                continue;
+            }
+            visited[i] = true;
+            tmp.add(nums[i]);
+            permuteHelper(nums, index + 1, tmp, result, visited);
+            tmp.remove(tmp.size() - 1);
+            visited[i] = false;
+        }
+    }
 }
