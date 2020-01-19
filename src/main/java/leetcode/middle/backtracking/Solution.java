@@ -154,34 +154,30 @@ public class Solution {
         boolean flag = false;
         // 向右走
         if (j < board[i].length - 1 && !visited[i][j + 1]) {
-            flag = existHelper(board, i, j + 1, word.substring(1, word.length()), visited);
+            flag = existHelper(board, i, j + 1, word.substring(1), visited);
             if (flag) {
-                visited[i][j] = false;
                 return true;
             }
         }
         // 向下走
         if (i < board.length - 1 && !visited[i + 1][j]) {
-            flag = existHelper(board, i + 1, j, word.substring(1, word.length()), visited);
+            flag = existHelper(board, i + 1, j, word.substring(1), visited);
             if (flag) {
-                visited[i][j] = false;
                 return true;
             }
         }
         // 向左走
         if (j > 0 && !visited[i][j - 1]) {
-            flag = existHelper(board, i, j - 1, word.substring(1, word.length()), visited);
+            flag = existHelper(board, i, j - 1, word.substring(1), visited);
             if (flag) {
-                visited[i][j] = false;
                 return true;
             }
         }
 
         // 向上走
         if (i > 0 && !visited[i - 1][j]) {
-            flag = existHelper(board, i - 1, j, word.substring(1, word.length()), visited);
+            flag = existHelper(board, i - 1, j, word.substring(1), visited);
             if (flag) {
-                visited[i][j] = false;
                 return true;
             }
         }
