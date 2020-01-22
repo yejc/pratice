@@ -119,4 +119,73 @@ public class Solution2 {
             return partition(nums, lo, j - 1, k);
         }
     }
+
+    /**
+     * 寻找峰值
+     *
+     * @param nums
+     * @return
+     */
+    public int findPeakElement(int[] nums) {
+        int left = 0, right = nums.length - 1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < nums[mid + 1]) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+
+    /**
+     * 在排序数组中查找元素的第一个和最后一个位置
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] searchRange(int[] nums, int target) {
+        int left = leftBound(nums, target);
+        int right = rightBound(nums, target);
+        return new int[]{left, right};
+    }
+
+    private int leftBound(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                while (mid > 0 && nums[mid - 1] == target) {
+                    mid--;
+                }
+                return mid;
+            }
+        }
+        return -1;
+    }
+
+    private int rightBound(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else {
+                while (mid < nums.length - 1 && nums[mid + 1] == target) {
+                    mid++;
+                }
+                return mid;
+            }
+        }
+        return -1;
+    }
+
 }

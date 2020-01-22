@@ -191,4 +191,5 @@ public class Solution {
         }
         return nums[left - 1] == target ? left - 1 : -1;
     }
+
 }
