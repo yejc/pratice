@@ -192,4 +192,61 @@ public class Solution {
         return nums[left - 1] == target ? left - 1 : -1;
     }
 
+    /**
+     * 搜索旋转排序数组
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int search(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        }
+        int start = 0, end = nums.length - 1;
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+            if (nums[mid] == target) {
+                return mid;
+            }
+            // 前半部分有序
+            if (nums[start] <= nums[mid]) {
+                if (target >= nums[start] && target < nums[mid]) {
+                    end = mid - 1;
+                } else {
+                    start = mid + 1;
+                }
+            } else {
+                // 后半部分有序
+                if (target <= nums[end] && target > nums[mid]) {
+                    start = mid + 1;
+                } else {
+                    end = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 搜索二维矩阵 II
+     *
+     * @param matrix
+     * @param target
+     * @return
+     */
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int row = matrix.length - 1;
+        int col = 0;
+        while (row >= 0 && col < matrix[0].length) {
+            if (target == matrix[row][col]) {
+                return true;
+            } else if (target < matrix[row][col]) {
+                row--;
+            } else if (target > matrix[row][col]) {
+                col++;
+            }
+        }
+        return false;
+    }
 }
