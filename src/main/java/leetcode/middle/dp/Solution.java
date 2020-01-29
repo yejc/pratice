@@ -1,5 +1,7 @@
 package leetcode.middle.dp;
 
+import java.util.Arrays;
+
 /**
  * @author yejc
  * @date 2020/1/26 21:43
@@ -75,11 +77,37 @@ public class Solution {
         return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
     }
 
+    /**
+     * Longest Increasing Subsequence
+     *
+     * @param nums
+     * @return
+     */
+    public int lengthOfLIS(int[] nums) {
+        // [10,9,2,5,3,7,101,18]
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        int result = 0;
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, 1);
+        for (int i = 0; i < nums.length; i++) {
+            int max = Integer.MIN_VALUE;
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Integer.max(dp[i], dp[j] + 1);
+                }
+            }
+            result = Integer.max(result, dp[i]);
+        }
+        return result;
+    }
+
 
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int[] coins = {2};
-        int b = solution.coinChange(coins, 1);
+        int[] coins = {10, 9, 2, 5, 3, 7, 101, 18};
+        int b = solution.lengthOfLIS(coins);
         System.out.println(b);
     }
 
