@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author yejc
  * @date 2020/3/7 10:54
  */
-public class Array {
+public class ArrayQ {
     /**
      * 找出数组中的重复数字
      * 长度为n的数字，里面元素的取值范围为0 ~ n-1，找出数组里的重复数字，如有多个重复数字，找出其中一个即可,如果没有重复数字返回-1
@@ -84,7 +84,7 @@ public class Array {
     }
 
     public static void main(String[] args) {
-        Array array = new Array();
+        ArrayQ array = new ArrayQ();
         int[] a1 = new int[7];
         a1[0] = 1;
         a1[1] = 3;
