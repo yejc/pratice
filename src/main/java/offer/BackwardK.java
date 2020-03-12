@@ -15,16 +15,15 @@ public class BackwardK {
         }
         ListNode p1 = head;
         ListNode p2 = head;
-        int i = 0;
+        for (int i = 0; i < k; i++) {
+            if (p1 == null) {
+                return null;
+            }
+            p1 = p1.next;
+        }
         while (p1 != null) {
             p1 = p1.next;
-            i++;
-            if (i > k) {
-                p2 = p2.next;
-            }
-        }
-        if (i < k) {
-            return null;
+            p2 = p2.next;
         }
         return p2;
     }
@@ -43,7 +42,7 @@ public class BackwardK {
         n5.next = n6;
 
         BackwardK backwardK = new BackwardK();
-        ListNode listNode = backwardK.find(n1, 4);
+        ListNode listNode = backwardK.find(n1, 7);
         System.out.println(listNode.val);
     }
 }
